@@ -1,0 +1,37 @@
+// _globales.scss
+@use 'variables' as v;
+
+/* Reset / base */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: v.$fuente_principal;
+  background: v.$bg;
+  color: #111827;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.45;
+}
+
+.container {
+  max-width: v.$max-width;
+  margin: 1.5rem auto;
+  padding: 0 v.$container-padding;
+}
+
+/* Typography */
+h1 { font-size: 1.6rem; margin: 0 0 .25rem; font-weight: v.$bold; }
+h2 { font-size: 1.15rem; margin: 0 0 .25rem; font-weight: v.$bold; }
+.small { font-size: .9rem; color: v.$muted; }
+
+/* Small helpers */
+.muted { color: v.$muted; }
+.code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9rem; }
+
+/* Focus accessibility */
+a:focus, button:focus, input:focus {
+  outline: 3px solid rgba(14,165,163,0.12);
+  outline-offset: 2px;
+  border-radius: 8px;
+}

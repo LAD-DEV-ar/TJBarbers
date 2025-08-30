@@ -1,0 +1,1 @@
+function actualizarTarjetaUI(a,t){const e=document.getElementById("casillas");e.innerHTML="";for(let n=1;n<=t;n++){const t=document.createElement("div");t.classList.add("casilla"),n<=a?(t.classList.add("activa"),t.innerHTML="✓"):t.innerHTML=n,e.appendChild(t)}}actualizarTarjetaUI(0,20);

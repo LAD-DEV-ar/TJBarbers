@@ -1,0 +1,41 @@
+// _variables.scss
+// Tokens globales
+
+$fuente_principal: 'Poppins', sans-serif !default;
+
+// Breakpoints
+$telefono: 480px !default;
+$tablet: 768px !default;
+$desktop: 1024px !default;
+
+// Colores
+$blanco: #FFFFFF !default;
+$gris: #e1e1e1 !default;
+$black: #0c0c0c !default;
+
+$bg: #fbfdff !default;
+$card: #ffffff !default;
+$muted: #6b7280 !default;
+$primary: #0ea5a3 !default;
+$accent: #2563eb !default;
+$danger: #ef4444 !default;
+$ghost-border: #e6eef0 !default;
+
+// Sombra y radios
+$shadow-lg: 0 10px 30px rgba(16,24,40,0.06) !default;
+$radius-lg: 12px !default;
+
+// Layout
+$max-width: 1200px !default;
+$container-padding: 1rem !default;
+
+// Spacing
+$space-xs: .25rem !default;
+$space-sm: .5rem !default;
+$space-md: .75rem !default;
+$space-lg: 1rem !default;
+
+// Font weights
+$thin: 300 !default;
+$regular: 400 !default;
+$bold: 700 !default;

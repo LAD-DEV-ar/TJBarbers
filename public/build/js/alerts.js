@@ -1,0 +1,1 @@
+document.addEventListener("click",function(e){if(e.target.matches(".alert-close")){var t=e.target.closest(".alert");t&&t.remove()}}),document.querySelectorAll(".alert").forEach(function(e){setTimeout(function(){e&&e.remove&&e.remove()},5e3)});

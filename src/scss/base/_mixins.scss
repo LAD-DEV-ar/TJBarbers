@@ -1,0 +1,29 @@
+// _mixins.scss
+@use 'variables' as v;
+
+// Media queries
+@mixin telefono { @media (min-width: v.$telefono) { @content; } }
+@mixin tablet   { @media (min-width: v.$tablet)   { @content; } }
+@mixin desktop  { @media (min-width: v.$desktop)  { @content; } }
+
+// Grid helper
+@mixin grid($cols, $gap: v.$space-md) {
+  display: grid;
+  grid-template-columns: repeat($cols, 1fr);
+  gap: $gap;
+}
+
+// Truncate multi-line
+@mixin truncate($lines: 1) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Center helper
+@mixin center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,30 @@
+// _table.scss
+@use 'base/variables' as v;
+
+.table-wrap {
+  overflow: auto;
+  max-height: 56rem;
+  border-radius: 8px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+  font-size: .95rem;
+}
+
+.table th, .table td {
+  padding: .65rem .75rem;
+  border-bottom: 1px solid #f3f6f8;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  background: transparent;
+  z-index: 1;
+  font-weight: 700;
+}

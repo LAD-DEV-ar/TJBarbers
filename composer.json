@@ -1,0 +1,17 @@
+{
+    "name": "laddev/fidelidad_barbers",
+    "description": "Tarjeta de fidelidad MVP (Si esto sale bien subelo a ig en un futuro)",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "MVC\\" : "./",
+            "Controllers\\" : "./controllers",
+            "Model\\" : "./models",
+            "Classes\\" : "./classes"
+        }
+    },
+    "require": {
+        "phpmailer/phpmailer": "^6.5",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}

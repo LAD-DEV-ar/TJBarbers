@@ -1,0 +1,14 @@
+// _form.scss
+@use 'base/variables' as v;
+
+.field { margin-bottom:12px; display:flex; flex-direction:column; gap:6px; }
+.field label { font-size:14px; color:#333; }
+.field input { padding:10px 12px; border-radius:8px; border:1px solid #e2e8f0; font-size:15px;; }
+.input, .input-copy {
+  width:100%;
+  padding:.55rem .6rem;
+  border-radius:8px;
+  border:1px solid #eef2f4;
+  background: transparent;
+  font-size:.95rem;
+}

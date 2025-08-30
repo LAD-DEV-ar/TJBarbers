@@ -1,0 +1,46 @@
+// _admin.scss
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+@use '../components/button' as btn;
+@use '../components/card' as card;
+@use '../components/table' as table;
+
+.admin {
+  &-header { display:flex; justify-content:space-between; align-items:center; gap:1rem; margin-bottom:1rem; }
+  &-header__left h1 { margin:0; font-size:1.3rem; font-weight:700; }
+  &-header__right { display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; }
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 1rem;
+  align-items: start;
+
+  @include m.tablet { grid-template-columns: 1fr; }
+}
+
+.col-left .tarjeta-compact { display:flex; gap:.75rem; align-items:center; }
+.col-left .qr { width:96px; height:96px; border-radius:8px; object-fit:cover; flex-shrink:0; }
+.col-left .tarjeta-meta { font-size:.95rem; }
+
+.wrap-code, code, .wrap-text { word-break: break-word; overflow-wrap: anywhere; white-space: normal; }
+
+/* actions / header actions */
+.header-actions { display:flex; justify-content:space-between; align-items:center; }
+
+/* solicitudes table tweaks */
+.table-wrap { @extend .table-wrap; } // uses component
+.table { @extend .table; }
+
+/* badges */
+.badge { display:inline-block; padding:.25rem .5rem; border-radius:999px; font-weight:700; font-size:.8rem; }
+.badge--success { background:#ecfdf5; color:#065f46; border:1px solid rgba(16,185,129,0.08); }
+.badge--warning { background:#fffbeb; color:#92400e; border:1px solid rgba(245,158,11,0.08); }
+.badge--danger { background:#fff1f2; color:#7f1d1d; border:1px solid rgba(239,68,68,0.06); }
+
+@media (max-width: v.$tablet) {
+  .table { min-width: 600px; }
+  .col-left { order:2; }
+  .col-right { order:1; }
+}

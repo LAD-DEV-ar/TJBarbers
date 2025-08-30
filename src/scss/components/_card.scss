@@ -1,0 +1,12 @@
+// _card.scss
+@use 'base/variables' as v;
+
+.card {
+  background: v.$card;
+  border-radius: v.$radius-lg;
+  padding: 1rem;
+  box-shadow: v.$shadow-lg;
+  overflow: visible;
+  margin: 0.5rem;
+}
+.card-title { margin:0 0 .25rem 0; font-weight: 700; }

@@ -1,0 +1,279 @@
+// pages/_auth.scss
+// Estilos para las vistas de autenticación: login / register / forgot password
+// Diseñado para integrarse con tu sistema SASS:
+// - importa variables con: @use 'base/variables' as v;
+// - importa mixins con:  @use 'base/mixins' as m;
+// Guardar como: scss/pages/_auth.scss
+
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+// ---------------------------------------------
+// Tokens locales (pequeños overrides si se necesitan)
+$auth-max-width: 960px;
+$auth-card-width: 420px;
+$auth-spacing: 1rem;
+$auth-radius: 12px;
+$auth-shadow: 0 10px 30px rgba(16,24,40,0.06);
+
+// ---------------------------------------------
+// Animaciones
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+// ---------------------------------------------
+// Page container
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+  background: v.$bg;
+
+  // optional inner container to limit width (e.g. for login + aside)
+  &__inner {
+    width: 100%;
+    max-width: $auth-max-width;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 2rem;
+    align-items: center;
+
+    @include m.tablet {
+      grid-template-columns: 1fr;
+      padding: 0 1rem;
+    }
+  }
+}
+
+// ---------------------------------------------
+// Card que contiene el form
+.auth-card {
+  width: 100%;
+  max-width: $auth-card-width;
+  background: v.$card;
+  border-radius: $auth-radius;
+  padding: 1.25rem;
+  box-shadow: $auth-shadow;
+  animation: fadeInUp .38s cubic-bezier(.2,.9,.2,1) both;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  border: 1px solid rgba(6, 95, 70, 0.03);
+}
+
+// header / title
+.auth-card__head {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+
+  .title {
+    font-size: 1.15rem;
+    font-weight: v.$bold;
+    margin: 0;
+  }
+  .subtitle {
+    font-size: .92rem;
+    color: v.$muted;
+    margin: 0;
+  }
+}
+
+// form layout
+.auth-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  margin-top: .25rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+
+  label {
+    font-size: .9rem;
+    color: #0f172a;
+    font-weight: 600;
+  }
+
+  .input {
+    width: 100%;
+    padding: .6rem .75rem;
+    border-radius: 8px;
+    border: 1px solid #eef2f4;
+    font-size: .95rem;
+    transition: border-color .14s ease, box-shadow .14s ease, transform .12s ease;
+    background: transparent;
+    color: #0f172a;
+
+    &::placeholder { color: #9aa4ad; }
+
+    &:focus {
+      outline: none;
+      border-color: v.$primary;
+      box-shadow: 0 6px 20px rgba(14,165,163,0.06);
+      transform: translateY(-1px);
+    }
+
+    &.error {
+      border-color: rgba(239,68,68,0.8);
+      box-shadow: 0 6px 18px rgba(239,68,68,0.04);
+    }
+  }
+
+  .help {
+    font-size: .85rem;
+    color: v.$muted;
+  }
+}
+
+// actions / buttons
+.auth-actions {
+  display: flex;
+  gap: .6rem;
+  align-items: center;
+  margin: 10px 0 15px 0;
+  flex-wrap: wrap;
+
+  .btn {
+    padding: .55rem .85rem;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .btn--primary {
+    background: v.$primary;
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(14,165,163,0.08);
+    transition: transform .12s ease, box-shadow .12s ease;
+    &:active { transform: translateY(1px) scale(.997); }
+  }
+
+  .btn--link {
+    background: transparent;
+    color: v.$muted;
+    font-weight: 600;
+    padding: .45rem .7rem;
+  }
+}
+
+// footer helpers (links, small notes)
+.auth-footer {
+  margin-top: .35rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5rem;
+  font-size: .9rem;
+  color: v.$muted;
+
+  a { color: v.$accent; text-decoration: none; font-weight: 700; }
+}
+
+// Alerts integration (assumes .alerts markup)
+.auth-alerts {
+  margin-top: .6rem;
+  .alert { border-radius: 8px; padding: .6rem .8rem; font-weight: 600; }
+  .alert--error { background: #fff1f2; color: #7f1d1d; }
+  .alert--success { background: #ecfdf5; color: #065f46; }
+  .alert--warning { background: #fffbeb; color: #92400e; }
+}
+
+// social/alt auth (if any)
+.auth-alt {
+  margin-top: .6rem;
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+  justify-content: center;
+
+  .alt-btn {
+    padding: .45rem .7rem;
+    border-radius: 8px;
+    border: 1px solid #e6eef0;
+    background: transparent;
+    font-weight: 700;
+    display: inline-flex;
+    gap: .5rem;
+    align-items: center;
+  }
+}
+
+// small visual helpers for inputs with icons
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .icon {
+    position: absolute;
+    left: .7rem;
+    color: #9aa4ad;
+    pointer-events: none;
+  }
+
+  .input {
+    padding-left: 2.4rem;
+  }
+}
+
+// validation message below input
+.field .error-message {
+  color: rgba(239,68,68,0.9);
+  font-size: .85rem;
+  margin-top: .25rem;
+  font-weight: 600;
+}
+
+// centered auth layout variant (useful for login simple page)
+.auth-center {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .auth-card { margin: 1.25rem; }
+}
+
+// small responsive tweaks
+@include m.tablet {
+  .auth-card { padding: 1.1rem; }
+  .auth-page__inner { grid-template-columns: 1fr; padding: 0; }
+}
+
+// accessibility & focus ring (visible)
+a:focus, button:focus, input:focus {
+  outline: 3px solid rgba(14,165,163,0.12);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+// subtle form micro-interactions
+.auth-card:hover { transform-origin: center; }
+.auth-card { transition: transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s ease; }
+.auth-card:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(16,24,40,0.08); }
+
+// ---------------------------------------------
+// Convenient small utilities used in auth views
+.util-center { display:flex; align-items:center; justify-content:center; }
+.text-muted { color: v.$muted; font-size: .9rem; }
+
+// ---------------------------------------------
+.password-field .toggle-pass { background:transparent; border:0; cursor:pointer; font-size:16px; }
+// End of auth styles

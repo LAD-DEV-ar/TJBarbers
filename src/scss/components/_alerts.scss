@@ -1,0 +1,12 @@
+// _alerts.scss
+@use 'base/variables' as v;
+
+.alerts { display:flex; flex-direction:column; gap:.5rem; margin-bottom:.75rem; }
+.alert {
+  padding:.6rem .8rem;
+  border-radius:8px;
+  font-weight:600;
+}
+.alert--success { background:#ecfdf5; color:#064e3b; border:1px solid rgba(52,211,153,0.08); }
+.alert--error   { background:#fff1f2; color:#7f1d1d; border:1px solid rgba(239,68,68,0.06); }
+.alert--warning { background:#fffbeb; color:#92400e; border:1px solid rgba(245,158,11,0.06); }
