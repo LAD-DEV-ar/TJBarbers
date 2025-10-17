@@ -75,25 +75,3 @@ function _alert_meta($type) {
     </div>
   <?php endforeach; ?>
 </div>
-
-<style>
-/* Estilos mínimos — recomendable mover a build/css/app.css */
-.alerts-wrapper { max-width: 1100px; margin: 14px auto; display:flex; flex-direction:column; gap:10px; padding: 0 12px; z-index:1000; }
-.alert { display:flex; align-items:center; gap:12px; padding:10px 14px; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
-.alert-left { font-weight:700; min-width:28px; text-align:center; }
-.alert-message { line-height:1.15; }
-.alert-close { margin-left:auto; background:transparent; border:0; font-size:18px; cursor:pointer; }
-
-/* Colores por tipo */
-.alert-success { background:#e6ffed; border:1px solid #b7f0c6; color:#046b2f; }
-.alert-error   { background:#ffe6e6; border:1px solid #feb0b0; color:#8b1c1c; }
-.alert-warning { background:#fff7e6; border:1px solid #ffd89a; color:#6a4b00; }
-.alert-info    { background:#e8f0ff; border:1px solid #bcd0ff; color:#003a8c; }
-
-@media (max-width:600px){
-  .alerts-wrapper{ padding:0 10px }
-  .alert{ padding:8px; font-size:14px }
-}
-</style>
-
-

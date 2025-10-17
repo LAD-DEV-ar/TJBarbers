@@ -6,6 +6,10 @@ $alerts = $alerts ?? [];
 // Asegurarnos sesión para obtener user id
 if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 $userId = $_SESSION['id'] ?? null;
+$scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+$host = $_SERVER['HTTP_HOST'];
+$link = $scheme . '://' . $host . '/tarjeta/vincular?code=' . rawurlencode($miTarjeta->codigo);
+$qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' . rawurlencode($link);
 ?>
 <!-- Modal de confirmación de canje (colocar dentro de views/tarjeta/index.php) -->
 <div id="modalRedeem" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalRedeemTitle" style="display:none;">
@@ -44,6 +48,8 @@ $userId = $_SESSION['id'] ?? null;
       <div class="tarjeta-header__left">
         <h1 id="tarjeta-title" class="title">Mi Tarjeta de Fidelidad</h1>
         <p class="subtitle">Sigue tu progreso y canjea recompensas del local.</p>
+        <p class="subtitle">Puedes compartir este QR o el Codigo para que tus conocidos
+            tambien esten vinculados a la tarjeta de fidelidad de la barberia</p>
       </div>
 
       <div class="tarjeta-header__right" style="display:flex;flex-direction:column;align-items:flex-end;gap:.5rem;">
@@ -54,7 +60,7 @@ $userId = $_SESSION['id'] ?? null;
         <!-- ID del usuario visible con botón copiar -->
         <div class="user-id-box small" style="display:flex; gap:.5rem; align-items:center;">
           <span class="muted">Tu ID:</span>
-          <code id="userIdCode" style="padding:.22rem .45rem; border-radius:6px; background:#f3f4f6; font-weight:700;"><?= htmlspecialchars($userId ?? '—') ?></code>
+          <code id="userIdCode" style="padding:0.87rem 1rem; border-radius:6px; background:#f3f4f6; font-weight:700;"><?= htmlspecialchars($userId ?? '—') ?></code>
           <button id="btnCopyUserId" class="btn btn--mini" type="button" title="Copiar ID">Copiar</button>
         </div>
       </div>
@@ -309,7 +315,7 @@ $userId = $_SESSION['id'] ?? null;
         <div class="tarjeta-top">
           <div class="tarjeta-qrcode">
             <div class="qr-box" aria-hidden="true">
-              <img src="/api/tarjeta/qr?size=200" alt="QR de la tarjeta" class="qr-img" />
+              <img class="qr-img" src="<?= htmlspecialchars($qrUrl, ENT_QUOTES) ?>" alt="QR tarjeta">
             </div>
             <div class="tarjeta-code">Código: <strong class="code-value">${esc(tarjeta.codigo||'')}</strong></div>
           </div>
@@ -473,7 +479,7 @@ $userId = $_SESSION['id'] ?? null;
 
     const tar = tResp.json.tarjeta ?? (rResp.json.tarjeta ?? {});
     if (!tResp.json.tieneTarjeta && !rResp.json.tieneTarjeta) {
-      if (firstLoad) root.innerHTML = `<div class="tarjeta-empty card"><p>No tienes una tarjeta asociada.</p></div>`;
+      if (firstLoad) root.innerHTML = `<div class="tarjeta-empty card"><p>No tienes una tarjeta asociada. Vinculate a una: </p><a class="btn btn--primary" href="/tarjeta/vincular">Vincular Tarjeta</a></div>`;
       return;
     }
 

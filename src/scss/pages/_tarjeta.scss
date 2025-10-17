@@ -46,12 +46,12 @@
     align-items:center;
 
     .qr-box {
-      width:84px; height:84px; border-radius:10px; overflow:hidden;
+      width:148px; height:148px; border-radius:8px; overflow:hidden;
       background: linear-gradient(180deg,#f8fafc,#fff);
       display:flex; align-items:center; justify-content:center;
       box-shadow: 0 6px 16px rgba(16,24,40,0.06);
     }
-    .qr-img { width:72px; height:72px; object-fit:cover; }
+    .qr-img { width:142px; height:142px; object-fit:cover; border-radius:8px;}
     .tarjeta-code { font-size:.95rem; color:#111827; .code-value { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; display:block; margin-top:.25rem; word-break:break-word; max-width:220px; }
     }
   }

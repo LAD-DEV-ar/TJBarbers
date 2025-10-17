@@ -27,3 +27,18 @@
   align-items: center;
   justify-content: center;
 }
+
+@mixin transition-alert {
+  transition:
+    opacity 360ms cubic-bezier(.2,.9,.3,1),
+    transform 360ms cubic-bezier(.2,.9,.3,1),
+    max-height 360ms ease,
+    padding 240ms ease,
+    margin 240ms ease;
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}

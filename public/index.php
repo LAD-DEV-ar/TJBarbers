@@ -63,6 +63,14 @@ $router->get('/admin/solicitudes', [AdminController::class, 'listarSolicitudes']
 $router->post('/admin/solicitudes/aprobar', [AdminController::class, 'aprobarSolicitud']);
 $router->post('/admin/solicitudes/rechazar', [AdminController::class, 'rechazarSolicitud']);
 
+$router->get('/administrar-tarjeta/editar', [AdminController::class, 'editarForm']);
+$router->post('/administrar-tarjeta/editar', [AdminController::class, 'editarSubmit']);
+
+// Clientes vista de admin
+$router->get('/admin/clientes', [AdminController::class, 'listarClientes']);
+$router->post('/admin/clientes/reinicio', [AdminController::class, 'reiniciarTarjeta']);
+
+
 
 
 

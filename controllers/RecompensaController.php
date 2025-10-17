@@ -12,11 +12,9 @@ class RecompensaController {
     // LISTAR recompensas para la tarjeta del admin
     public static function index(Router $router) {
         // Debe requerir que el barbero tenga tarjeta
-        require_barbero_con_tarjeta('/');
-
+        require_barbero_con_tarjeta('/administrar-tarjeta');   
         start_session_if_needed();
         $tarjetaId = (int)($_SESSION['id_tarjeta'] ?? 0);
-
         // seguridad extra: si viene tarjeta_id por GET, solo usarla para validar (no confiar)
         if (isset($_GET['tarjeta_id'])) {
             $given = (int)$_GET['tarjeta_id'];
@@ -385,3 +383,4 @@ class RecompensaController {
         exit;
     }
 }
+

@@ -39,3 +39,21 @@ $space-lg: 1rem !default;
 $thin: 300 !default;
 $regular: 400 !default;
 $bold: 700 !default;
+
+$alerts-max-width: 1100px;
+$alerts-gap: 10px;
+$alerts-padding-x: 12px;
+$alert-padding-y: 10px;
+$alert-padding-x: 14px;
+$alert-radius: 10px;
+$alert-shadow: 0 6px 18px rgba(0,0,0,0.06);
+$alert-min-height: 0;
+$alert-max-height: 320px;
+$stagger-ms: 70ms;
+
+$alert-colors: (
+  success: (bg: #e6ffed, border: #b7f0c6, color: #046b2f),
+  error:   (bg: #ffe6e6, border: #feb0b0, color: #8b1c1c),
+  warning: (bg: #fff7e6, border: #ffd89a, color: #6a4b00),
+  info:    (bg: #e8f0ff, border: #bcd0ff, color: #003a8c)
+);

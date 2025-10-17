@@ -11,6 +11,7 @@ use Model\Tarjeta;
 class TarjetaController{
     public static function index(Router $router) {
         require_login_simple('/'); // redirige si no está logueado
+        isBarbero('/administrar-tarjeta');
 
         $userId = $_SESSION['id'] ?? null;
 
@@ -544,7 +545,7 @@ class TarjetaController{
         } else {
             $id_recompensa = isset($_POST['id_recompensa']) ? (int)$_POST['id_recompensa'] : 0;
         }
-
+        
         if (!$id_recompensa) {
             $msg = 'Recompensa no indicada';
             if (stripos($contentType, 'application/json') !== false) {
@@ -661,8 +662,17 @@ class TarjetaController{
             $checkPendStmt->close();
         }
 
+        // Encontrar el texto de la descripcion
+        $sqlChk = "SELECT descripcion FROM recompensas WHERE id = ? LIMIT 1";
+        $chk = $db->prepare($sqlChk);
+        $chk->bind_param('i', $id_recompensa);
+        $ok = $chk->execute();
+        $resChk = $chk->get_result();
+        $already = $resChk->fetch_assoc();
+        $descripcion = $already['descripcion'];
+
         // 3) Insertar la solicitud (pending)
-        $insertStmt = $db->prepare("INSERT INTO canje_solicitudes (id_recompensa, id_usuario, id_tarjeta, estado, creado_en) VALUES (?, ?, ?, 'pending', NOW())");
+        $insertStmt = $db->prepare("INSERT INTO canje_solicitudes (id_recompensa, id_usuario, id_tarjeta, estado, descripcion, creado_en) VALUES (?, ?, ?, 'pending', ?, NOW())");
         if (!$insertStmt) {
             if (stripos($contentType, 'application/json') !== false) {
                 http_response_code(500);
@@ -673,7 +683,7 @@ class TarjetaController{
             header('Location:/tarjeta');
             exit;
         }
-        $insertStmt->bind_param('iii', $id_recompensa, $userId, $miTarjetaId);
+        $insertStmt->bind_param('iiis', $id_recompensa, $userId, $miTarjetaId, $descripcion);
         $ok = $insertStmt->execute();
         $insertStmt->close();
 

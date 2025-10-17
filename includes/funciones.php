@@ -43,6 +43,15 @@ function require_barbero_simple(string $redirect = '/'): void {
     }
 }
 
+function isBarbero(string $redirect = '/'): void {
+    start_session_if_needed();
+    if (!empty($_SESSION['barbero']) || (int)$_SESSION['barbero'] == 1) {
+        \Model\Usuario::addAlert('warning','Si eres administrador no puedes utilizar tu propia tarjeta, solo la puedes administrar', true);
+        header('Location: ' . $redirect);
+        exit;
+    }
+}
+
 function require_barbero_con_tarjeta(string $redirect = '/') : void {
     start_session_if_needed();
 
@@ -70,6 +79,7 @@ function require_barbero_con_tarjeta(string $redirect = '/') : void {
         // el admin no tiene tarjeta asignada -> no puede administrar
         // en vez de permitir crear otra tarjeta aquí forzamos a que el admin primero
         // tenga una tarjeta asignada por el superadmin o por el proceso del local.
+        \Model\ActiveRecord::addAlert('error','No tienes ninguna tarjeta, crea o vinculate a una para empezar a administrarla', true);
         header('Location:' . $redirect);
         exit;
     }

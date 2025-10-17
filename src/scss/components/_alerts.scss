@@ -1,12 +1,131 @@
 // _alerts.scss
 @use 'base/variables' as v;
+@use 'base/mixins' as m;
 
-.alerts { display:flex; flex-direction:column; gap:.5rem; margin-bottom:.75rem; }
-.alert {
-  padding:.6rem .8rem;
-  border-radius:8px;
-  font-weight:600;
+// Alias (legibles) tomados desde v.
+$alerts-max-width: v.$alerts-max-width;
+$alerts-gap: v.$alerts-gap;
+$alerts-padding-x: v.$alerts-padding-x;
+$alert-padding-y: v.$alert-padding-y;
+$alert-padding-x: v.$alert-padding-x;
+$alert-radius: v.$alert-radius;
+$alert-shadow: v.$alert-shadow;
+$alert-max-height: v.$alert-max-height;
+$stagger-ms: v.$stagger-ms;
+
+/* Contenedor principal */
+.alerts-wrapper {
+  max-width: $alerts-max-width;
+  margin: 14px auto;
+  display: flex;
+  flex-direction: column;
+  gap: $alerts-gap;
+  padding: 0 $alerts-padding-x;
+  z-index: 1000;
+
+  .alert {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: $alert-padding-y $alert-padding-x;
+    border-radius: $alert-radius;
+    box-shadow: $alert-shadow;
+
+    /* estado base (oculto hasta que JS añada .show) */
+    opacity: 0;
+    transform: translateY(-8px) scale(.995);
+    pointer-events: none;
+    max-height: $alert-max-height;
+    overflow: hidden;
+    will-change: transform, opacity, max-height;
+
+    /* usa el mixin de transiciones de tus mixins */
+    @include m.transition-alert();
+    transition-delay: calc(var(--i, 0) * #{$stagger-ms});
+
+    .alert-left {
+      font-weight: 700;
+      min-width: 28px;
+      text-align: center;
+    }
+
+    .alert-body { flex: 1 1 auto; }
+
+    .alert-message { line-height: 1.15; font-weight: v.$bold;}
+
+    .alert-close {
+      margin-left: auto;
+      background: transparent;
+      border: 0;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 6px;
+      transition: background 140ms ease, transform 140ms ease;
+
+      &:focus,
+      &:hover {
+        background: rgba(0,0,0,0.06);
+        transform: translateY(-1px);
+        outline: none;
+      }
+    }
+
+    /* Visible (JS añade .show) */
+    &.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+      max-height: $alert-max-height;
+    }
+
+    /* Salida/colapso (JS añade .hiding) */
+    &.hiding {
+      opacity: 0;
+      transform: translateY(-8px) scale(.98);
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+      max-height: 0;
+      pointer-events: none;
+    }
+  } // .alert
+} // .alerts-wrapper
+
+/* Usar el mapa de colores desde v (namespace) */
+@each $type, $vals in v.$alert-colors {
+  .alert-#{$type} {
+    background: map-get($vals, bg);
+    border: 1px solid map-get($vals, border);
+    color: map-get($vals, color);
+  }
 }
-.alert--success { background:#ecfdf5; color:#064e3b; border:1px solid rgba(52,211,153,0.08); }
-.alert--error   { background:#fff1f2; color:#7f1d1d; border:1px solid rgba(239,68,68,0.06); }
-.alert--warning { background:#fffbeb; color:#92400e; border:1px solid rgba(245,158,11,0.06); }
+
+/* Respetar preferencia de reducir movimiento usando el mixin */
+@include m.reduced-motion {
+  .alerts-wrapper {
+    .alert,
+    .alert.show,
+    .alert.hiding {
+      transition: none !important;
+      transform: none !important;
+      opacity: 1 !important;
+      max-height: none !important;
+      padding: initial !important;
+      margin: initial !important;
+    }
+  }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .alerts-wrapper {
+    padding: 0 10px;
+
+    .alert {
+      padding: 8px;
+      font-size: 14px;
+    }
+  }
+}

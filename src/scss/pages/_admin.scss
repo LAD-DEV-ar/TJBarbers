@@ -1,46 +1,323 @@
-// _admin.scss
 @use '../base/variables' as v;
 @use '../base/mixins' as m;
 @use '../components/button' as btn;
 @use '../components/card' as card;
 @use '../components/table' as table;
 
-.admin {
-  &-header { display:flex; justify-content:space-between; align-items:center; gap:1rem; margin-bottom:1rem; }
-  &-header__left h1 { margin:0; font-size:1.3rem; font-weight:700; }
-  &-header__right { display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; }
+/* ---------------------------
+   Admin view — improved + responsive
+   --------------------------- */
+
+/* Local aliases for tokens */
+$max-width: v.$max-width;
+$container-padding: v.$container-padding;
+$card-bg: v.$card;
+$muted: v.$muted;
+$accent: v.$accent;
+$primary: v.$primary;
+$danger: v.$danger;
+$shadow: v.$shadow-lg;
+$radius: v.$radius-lg;
+$space-xs: v.$space-xs;
+$space-sm: v.$space-sm;
+$space-md: v.$space-md;
+
+/* Page container (wrapper) */
+.admin.container {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: $container-padding;
+  box-sizing: border-box;
+  color: inherit;
 }
 
+/* Header */
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1.25rem 0 1.25rem 0;
+  flex-wrap: wrap;
+
+  &__left {
+    min-width: 220px;
+    h1 { margin: 0; font-size: 1.35rem; font-weight: 700; line-height: 1.05; }
+    .muted { margin: .125rem 0 0 0; color: $muted; font-size: .95rem; }
+  }
+
+  &__right {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+}
+
+/* Grid layout: left aside + right main */
 .grid-layout {
   display: grid;
-  grid-template-columns: 360px 1fr;
-  gap: 1rem;
+  grid-template-columns: 1fr;
   align-items: start;
 
-  @include m.tablet { grid-template-columns: 1fr; }
+  @include m.tablet {
+    grid-template-columns: 450px 1fr; /* stack on narrow screens */
+  }
 }
 
-.col-left .tarjeta-compact { display:flex; gap:.75rem; align-items:center; }
-.col-left .qr { width:96px; height:96px; border-radius:8px; object-fit:cover; flex-shrink:0; }
-.col-left .tarjeta-meta { font-size:.95rem; }
+/* Card (use component if available) */
+.card {
+  background: $card-bg;
+  border-radius: $radius;
+  padding: 1rem;
+  box-shadow: $shadow;
+  border: 1px solid rgba(0,0,0,0.04);
+  overflow: hidden;
 
-.wrap-code, code, .wrap-text { word-break: break-word; overflow-wrap: anywhere; white-space: normal; }
-
-/* actions / header actions */
-.header-actions { display:flex; justify-content:space-between; align-items:center; }
-
-/* solicitudes table tweaks */
-.table-wrap { @extend .table-wrap; } // uses component
-.table { @extend .table; }
-
-/* badges */
-.badge { display:inline-block; padding:.25rem .5rem; border-radius:999px; font-weight:700; font-size:.8rem; }
-.badge--success { background:#ecfdf5; color:#065f46; border:1px solid rgba(16,185,129,0.08); }
-.badge--warning { background:#fffbeb; color:#92400e; border:1px solid rgba(245,158,11,0.08); }
-.badge--danger { background:#fff1f2; color:#7f1d1d; border:1px solid rgba(239,68,68,0.06); }
-
-@media (max-width: v.$tablet) {
-  .table { min-width: 600px; }
-  .col-left { order:2; }
-  .col-right { order:1; }
+  &.header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
 }
+
+/* Titles & small text */
+.card-title, .card h2, .card h3 {
+  margin: 0 0 .45rem 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.muted { color: $muted; font-size: .95rem; }
+.small { font-size: .85rem; color: $muted; }
+
+/* ---------- Left column: tarjeta compact ---------- */
+.col-left {
+  .tarjeta-compact {
+    display: flex;
+    gap: .75rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+    .qr {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      flex-shrink: 0;
+      border: 1px solid rgba(0,0,0,0.04);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+    }
+
+    .tarjeta-meta {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+
+      .wrap-code {
+        display: inline-block;
+        padding: .3rem .55rem;
+        border-radius: 8px;
+        background: rgba(0,0,0,0.02);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+        font-weight: 700;
+        word-break: break-all;
+      }
+
+      .actions-row {
+        margin-top: .55rem;
+        display: flex;
+        gap: .5rem;
+        flex-wrap: wrap;
+      }
+    }
+  }
+
+  .link-copy {
+    margin-top: .6rem;
+    label.small { display:block; margin-bottom:.3rem; color:$muted; }
+    .copy-row {
+      display:flex;
+      gap:.5rem;
+      align-items:center;
+      width:100%;
+
+      .input-copy {
+        flex:1;
+        padding:.5rem .6rem;
+        border-radius:8px;
+        border:1px solid rgba(0,0,0,0.06);
+        background: transparent;
+        font-family: ui-monospace, monospace;
+        color: inherit;
+      }
+      .btn { white-space:nowrap; }
+    }
+  }
+}
+
+/* ---------- Forms & fields ---------- */
+.field {
+  display:flex;
+  flex-direction:column;
+  gap:.45rem;
+
+  label { font-weight:600; font-size:.95rem; color: inherit; }
+  .input,
+  input.input,
+  input[type="text"],
+  input[type="email"],
+  input[type="number"] {
+    padding: .55rem .7rem;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.06);
+    background: transparent;
+    outline: none;
+    font-size: .95rem;
+    transition: box-shadow .12s ease, transform .08s ease, border-color .12s ease;
+  }
+
+  .input:focus,
+  input.input:focus {
+    box-shadow: 0 8px 28px rgba(14,165,163,0.06);
+    border-color: $primary;
+    transform: translateY(-1px);
+  }
+}
+
+/* small helpers for spacing (replace inline style blocks) */
+.actions-row {
+  display:flex;
+  gap:.6rem;
+  align-items:center;
+  margin-top:.6rem;
+  flex-wrap:wrap;
+}
+
+/* ---------- Recompensas list ---------- */
+.list-clean { list-style:none; padding:0; margin:0; }
+.recomp-item {
+  padding:.5rem 0;
+  border-bottom: 1px dashed rgba(0,0,0,0.03);
+  font-size:.95rem;
+}
+
+/* ---------- Right column (main) ---------- */
+.col-right {
+  .header-actions { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }
+}
+
+/* Use your table component if available; fallback styles below */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+  font-size: .95rem;
+  background: transparent;
+
+  thead {
+    background: linear-gradient(180deg, rgba(255,255,255,0.015), transparent);
+  }
+
+  th, td {
+    padding: .6rem .75rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+    vertical-align: middle;
+  }
+
+  th { font-weight:700; font-size:.9rem; }
+
+  td .wrap-text {
+    display:block;
+    word-break: break-word;
+    max-width: 36ch;
+  }
+}
+
+/* Mobile: collapse table into stacked cards for readability */
+@media (max-width: 700px) {
+  .table-wrap { padding: 0; border-radius: 6px; border: none; }
+  .table {
+    min-width: 100%;
+    display: block;
+
+    thead { display: none; }
+    tbody { display: block; }
+    tr {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: .35rem;
+      padding: .6rem;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      background: rgba(255,255,255,0.01);
+      margin-bottom: .45rem;
+      border-radius: 8px;
+    }
+    td {
+      display: flex;
+      justify-content: space-between;
+      padding: .25rem 0;
+      border: none;
+    }
+    td:before {
+      /* optional: requires adding data-label="" attribute to each td in server-rendered HTML
+         e.g. <td data-label="Cliente">...</td> — if you can't, remove this rule. */
+      content: attr(data-label);
+      font-weight: 700;
+      color: $muted;
+      margin-right: .5rem;
+      flex: 0 0 42%;
+      max-width: 42%;
+    }
+  }
+
+  /* compact QR and tarjeta layout */
+  .tarjeta-compact {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .qr { width: 120px; height: 120px; }
+  }
+
+  /* actions & header adjust */
+  .admin-header { gap: .6rem; }
+  .card { padding: .85rem; }
+}
+
+/* ---------- Badges ---------- */
+.badge {
+  display:inline-block;
+  padding:.25rem .5rem;
+  border-radius:999px;
+  font-weight:700;
+  font-size:.82rem;
+  color: #fff;
+  &--success { background: $primary; color: #fff; }
+  &--danger  { background: $danger; color: #fff; }
+  &--warning { background: #f59e0b; color: #fff; }
+}
+
+/* ---------- Empty / placeholders ---------- */
+.empty-note {
+  padding: 1rem;
+  margin: 7px 0 7px 0;
+  color: $muted;
+  text-align:center;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.02);
+}
+
+/* Respect reduced motion preference */
+@include m.reduced-motion {
+  * { transition: none !important; animation: none !important; }
+}
+
+/* Extra small screens tweaks */
+@media (max-width: 420px) {
+  .tarjeta-compact .tarjeta-meta { font-size: .92rem; }
+  .qr { width: 110px; height: 110px; }
+  .actions-row { gap: .4rem; }
+}
+
